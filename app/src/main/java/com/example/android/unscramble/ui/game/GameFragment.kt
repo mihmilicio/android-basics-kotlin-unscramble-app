@@ -32,7 +32,7 @@ import com.example.android.unscramble.databinding.GameFragmentBinding
 class GameFragment : Fragment() {
 
     companion object {
-        public const val TAG = "GameFragment"
+        const val TAG = "GameFragment"
     }
 
     private val viewModel: GameViewModel by viewModels()
