@@ -121,7 +121,7 @@ class GameFragment : Fragment() {
      * restart the game.
      */
     private fun restartGame() {
-        // TODO change word
+        viewModel.reinitializeData()
         setErrorTextField(false)
         updateNextWordOnScreen()
     }
