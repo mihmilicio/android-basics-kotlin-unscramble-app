@@ -63,13 +63,18 @@ class GameFragment : Fragment() {
         // Setup a click listener for the Submit and Skip buttons.
         binding.submit.setOnClickListener { onSubmitWord() }
         binding.skip.setOnClickListener { onSkipWord() }
-        // Update the UI
-        binding.score.text = getString(R.string.score, 0)
-        binding.wordCount.text = getString(
-                R.string.word_count, 0, MAX_NO_OF_WORDS)
 
-        viewModel.currentScrambledWord.observe(viewLifecycleOwner)
-            { newWord -> binding.textViewUnscrambledWord.text = newWord }
+        viewModel.score.observe(viewLifecycleOwner) { score ->
+            binding.score.text = getString(R.string.score, score)
+        }
+
+        viewModel.currentWordCount.observe(viewLifecycleOwner) { wordCount ->
+            binding.wordCount.text = getString(R.string.word_count, wordCount, MAX_NO_OF_WORDS)
+        }
+
+        viewModel.currentScrambledWord.observe(viewLifecycleOwner) { newWord ->
+            binding.textViewUnscrambledWord.text = newWord
+        }
     }
 
     override fun onDetach() {
@@ -150,7 +155,7 @@ class GameFragment : Fragment() {
     private fun showFinalScoreDialog() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(R.string.congratulations)
-            .setMessage(getString(R.string.you_scored, viewModel.score))
+            .setMessage(getString(R.string.you_scored, viewModel.score.value))
             .setCancelable(false) // Make your alert dialog not cancelable when the back key is pressed
             .setNegativeButton(R.string.exit) { _, _ -> exitGame() }
             .setPositiveButton(R.string.play_again) { _, _ -> restartGame() }
